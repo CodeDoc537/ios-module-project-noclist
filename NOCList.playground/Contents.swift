@@ -45,8 +45,8 @@ let agent11 = (coverName: "Frank Barnes", realName: "Dale Dye", accessLevel: 9, 
 let agents = [agent1, agent2, agent3, agent4, agent5, agent6, agent7, agent8, agent9, agent10, agent11]
 //: ## Step 3
 //: Create a function that calculates the total number of compromised agents. Inside the function, iterate over the array of agents to determine which ones are compromised. Return the total count.
-var compromisedAgents = 0
 func checkCompromisedAgents() -> Int {
+    var compromisedAgents = 0
     for agent in agents {
         if  agent.compromised == true{
             compromisedAgents += 1
@@ -56,8 +56,8 @@ func checkCompromisedAgents() -> Int {
 }
 //: ## Step 4
 //: Call the above function to find the total number of compromised agents and then print a sentence that says "# agents have been compromised!" using string interpolation.
-checkCompromisedAgents()
-print("\(compromisedAgents) agents have been compromised!")
+var num = checkCompromisedAgents()
+print("\(num) agents have been compromised!")
 //: ## Step 5
 //: Create a function called "findCleanAgents" that both prints the cover names of all uncompromised agents, as well as returns an array of agents that are uncompromised.
 func findCleanAgents() -> [(coverName: String, realName: String, accessLevel: Int, compromised: Bool)] {
@@ -65,7 +65,7 @@ func findCleanAgents() -> [(coverName: String, realName: String, accessLevel: In
     for agent in agents {
         if  agent.compromised == false{
             print(agent.coverName)
-            cleanAgents.insert(agent, at: 0)
+            cleanAgents.append(agent)
         }
     }
     return cleanAgents
@@ -78,16 +78,14 @@ print("\(findCleanAgents().count) clean agents out of \(agents.count) total agen
 //: - Example: `Jon Voight, level: 9 **WARNING** **COMPROMISED**`
 func findHighRisk() {
     for agent in agents {
-        if agent.accessLevel >= 8 {
-            if agent.compromised == false {
+        if agent.compromised == false && agent.accessLevel >= 8{
                 print("\(agent.realName), Level: \(agent.accessLevel)")
-            }
-            if agent.compromised == true {
-                print("\(agent.realName), level: \(agent.accessLevel) **WARNING** **COMPROMISED**")
-            }
+        } else if agent.compromised == true && agent.accessLevel >= 8 {
+            print("\(agent.realName), level: \(agent.accessLevel) **WARNING** **COMPROMISED**")
         }
     }
 }
+
 //: ## Step 8
 //: Call the above function and check the output in the console to ensure it is functioning properly.
 findHighRisk()
